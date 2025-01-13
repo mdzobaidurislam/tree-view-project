@@ -10,18 +10,17 @@ const TreeItem = ({ isSaveData = false, item, level = 0, onUpdate }) => {
     onUpdate(newData);
   };
 
-  const isNode = item.children && !item.value;
-  const itemClass = `tree-item ${isNode ? "node" : item.isEditable ? "editable" : "non-editable"}`;
-  const backgroundColor = isNode ? "lightblue" : item.isEditable ? "white" : "lightgray";
+  const isNode = item.children  &&  !item.value  ;
+  console.log("isNode",isNode)
+  const itemClass = `tree-item ${isNode && item.children.length > 0  ? "node" : item.isEditable ? "editable" : "non-editable"}`;
 
-  console.log("item", item)
   return (
     <div>
       <div
         className={itemClass}
-        style={{ marginLeft: `${level * 20}px`, backgroundColor }}
+        style={{ marginLeft: `${level * 20}px` }}
       >
-        {isNode && (
+        {isNode && item.children.length > 0 && (
           <span
             className="collapse-icon"
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -31,71 +30,80 @@ const TreeItem = ({ isSaveData = false, item, level = 0, onUpdate }) => {
         )}
 
         <span className="item-label">{itemData.label}:</span>
-
-        {!isNode && (
-          item.isEditable ? (
-            itemData.type === "checkbox" ? (
+        {
+          itemData.type === "checkbox" && (
+            <label className="checkbox-wrapper">
               <input
+                type="checkbox"
                 disabled={isSaveData}
-                type={itemData.type}
                 checked={Boolean(itemData.value)}
                 onChange={(e) => handleChange("value", e.target.checked)}
-                style={{ marginLeft: "10px" }}
               />
-            ) : itemData.type === "select" ? (
-              <select
-                disabled={isSaveData}
-                value={itemData.value}
-                onChange={(e) => handleChange("value", e.target.value)}
-                style={{
-                  backgroundColor: item.isEditable ? "white" : "lightgray",
-                  marginLeft: "10px",
-                }}
-              >
-                {itemData.options?.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                disabled={isSaveData}
-                type={itemData.type}
-                value={itemData.value}
-                onChange={(e) => handleChange("value", e.target.value)}
-                style={{
-                  backgroundColor: item.isEditable ? "white" : "lightgray",
-                }}
-              />
-            )
-          ) : (
-            <span
-              className="item-value"
-              style={{ backgroundColor: "lightgray" }}
-            >
-              {itemData.value?.toString()}
-            </span>
+              <span className="checkbox-label">
+                {itemData.value ? "Yes" : "No"}
+              </span>
+            </label>
           )
+        }
+        {!isNode && (
+          <div className="form-control">
+            {item.isEditable ? (
+              itemData.type === "select" ? (
+                <select
+                  className="select-input"
+                  disabled={isSaveData}
+                  value={itemData.value}
+                  onChange={(e) => handleChange("value", e.target.value)}
+                >
+                  {itemData.options?.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <>
+                {itemData.type === "text"  &&
+                <input
+                  className="text-input"
+                  type="text"
+                  disabled={isSaveData}
+                  value={itemData.value}
+                  onChange={(e) => handleChange("value", e.target.value)}
+                />}
+                 {itemData.type === "number"  &&
+                <input
+                  className="text-input"
+                  type="number"
+                  disabled={isSaveData}
+                  value={itemData.value}
+                  onChange={(e) => handleChange("value", e.target.value)}
+                />}
+                </>
+              )
+            ) : (
+              <span className="item-value">
+                {itemData.value?.toString()}
+              </span>
+            )}
+          </div>
         )}
-
       </div>
 
-      {!isCollapsed &&
-        item.children?.map((child) => (
-          <TreeItem
-            isSaveData={isSaveData}
-            key={child.id} // Using a unique identifier for stability
-            item={child}
-            level={level + 1}
-            onUpdate={(updatedChild) => {
-              const newChildren = [...item.children];
-              const childIndex = newChildren.findIndex((c) => c.id === child.id);
-              newChildren[childIndex] = updatedChild;
-              handleChange("children", newChildren);
-            }}
-          />
-        ))}
+      {!isCollapsed && item.children?.map((child) => (
+        <TreeItem
+          key={child.id}
+          isSaveData={isSaveData}
+          item={child}
+          level={level + 1}
+          onUpdate={(updatedChild) => {
+            const newChildren = [...item.children];
+            const childIndex = newChildren.findIndex((c) => c.id === child.id);
+            newChildren[childIndex] = updatedChild;
+            handleChange("children", newChildren);
+          }}
+        />
+      ))}
     </div>
   );
 };

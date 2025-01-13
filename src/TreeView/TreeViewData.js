@@ -37,7 +37,7 @@ export default function TreeViewData() {
                 { id: 302, label: 'Model', value: 'FR-2023-4D', type: 'text', isEditable: true },
                 { id: 303, label: 'Type', value: '4-Door', type: 'select', options: ['2-Door', '3-Door', '4-Door', '5-Door'], isEditable: true },
                 { id: 304, label: 'Temperature', value: '38', type: 'number', step: 0.5, isEditable: true },
-                { id: 305, label: 'Available', value: "Yes", type: 'select',options: ['Yes', 'No'], isEditable: true },
+                { id: 305, label: 'Available', value: false, type: 'checkbox', isEditable: true },
                 { id: 306, label: 'Cost', value: '2345.15', type: 'number', step: 0.01, isEditable: true },
                 {
                     id: 307,
