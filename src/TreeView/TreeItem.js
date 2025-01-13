@@ -12,13 +12,13 @@ const TreeItem = ({ isSaveData = false, item, level = 0, onUpdate }) => {
 
   const isNode = item.children  &&  !item.value  ;
   console.log("isNode",isNode)
-  const itemClass = `tree-item ${isNode && item.children.length > 0  ? "node" : item.isEditable ? "editable" : "non-editable"}`;
+  const itemClass = `tree-item ${itemData.label} ${isNode && item.children.length > 0  ? "node" : item.isEditable ? "editable" : "non-editable"}`;
 
   return (
     <div>
       <div
         className={itemClass}
-        style={{ paddingLeft: `${level * 20}px` }}
+        style={{ paddingLeft: `${level===2 ? (2 * 30)+40 : 60}px` }}
       >
         {isNode && item.children.length > 0 && (
           <span

@@ -55,15 +55,21 @@
   border-bottom: 1px solid #eee;
   display: flex;
   align-items: center;
-  /* gap: 12px; */
   font-size: 14px;
+  text-align: left;
 }
+
 .tree-item.node .item-label {
   min-width: max-content  !important;
   font-weight: 700;
 }
 .node {
   background-color: #e6f3ff;
+  padding-left: 0px !important;
+}
+
+.tree-item.Parts.node {
+  padding-left: 40px !important;
 }
 
 .editable {
