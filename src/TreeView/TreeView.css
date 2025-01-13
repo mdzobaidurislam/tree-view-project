@@ -55,10 +55,13 @@
   border-bottom: 1px solid #eee;
   display: flex;
   align-items: center;
-  gap: 12px;
+  /* gap: 12px; */
   font-size: 14px;
 }
-
+.tree-item.node .item-label {
+  min-width: max-content  !important;
+  font-weight: 700;
+}
 .node {
   background-color: #e6f3ff;
 }

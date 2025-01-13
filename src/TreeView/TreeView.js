@@ -18,7 +18,10 @@ const TreeView = ({title="",isSaveData=false, data, onSave }) => {
   const [hasChanges, setHasChanges] = useState(false);
 
   const shouldShow = (itemData) => {
-    if (!searchTerm) return true;
+    if (!searchTerm){
+      // setTreeData(data)
+      return true;
+    }
     return itemData.label?.toLowerCase().includes(searchTerm.toLowerCase());
   };
 

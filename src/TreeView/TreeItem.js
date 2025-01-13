@@ -18,7 +18,7 @@ const TreeItem = ({ isSaveData = false, item, level = 0, onUpdate }) => {
     <div>
       <div
         className={itemClass}
-        style={{ marginLeft: `${level * 20}px` }}
+        style={{ paddingLeft: `${level * 20}px` }}
       >
         {isNode && item.children.length > 0 && (
           <span
