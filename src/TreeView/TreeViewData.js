@@ -1,6 +1,15 @@
+import { useState } from "react";
 import TreeView from "./TreeView";
+import Modal from "../Modal/Modal";
 
 export default function TreeViewData() {
+     const [treeDataSave, setTreeDataSave] = useState([]);
+     const [isModalOpen, setIsModalOpen] = useState(false);
+     const [isDisable, setIsDisable] = useState(false);
+
+     const openModal = () => setIsModalOpen(true);
+     const closeModal = () => setIsModalOpen(false);
+
     const sampleData = [
         {
             id: 1,
@@ -44,16 +53,23 @@ export default function TreeViewData() {
     ];
 
     const handleSave = (updatedData) => {
+        setTreeDataSave(updatedData)
         console.log('Saving changes:', updatedData);
-        alert('Changes saved successfully!');
+        openModal()
+        setIsDisable(true)
     };
 
+    console.log("isDisable",isDisable)
     return (
         <div style={{
             width: "650px",
             margin: "auto"
         }}>
-            <TreeView data={sampleData} onSave={handleSave} />
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <TreeView title="Update Data" isSaveData={isModalOpen} data={treeDataSave} onSave={handleSave} />
+      </Modal>
+
+            <TreeView isSaveData={false} data={sampleData} onSave={handleSave} />
         </div>
     );
 }
